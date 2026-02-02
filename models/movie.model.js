@@ -33,4 +33,6 @@ const movieSchema = new mongoose.Schema({
         required: true,
         default: "RELEASED",
      }
-},{timestamps: true})
+},{timestamps: true});
+const Movie = mongoose.model('Movie',movieSchema)// yaha phle model ka nam then schema pass then collection name
+export default Movie
