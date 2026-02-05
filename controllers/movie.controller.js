@@ -1,57 +1,30 @@
+import { response } from 'express';
 import Movie from '../models/movie.model.js'
 import {getMovieById} from "../services/movie.service.js";
-const errorResponseBody = {
-    err:{},
-    data:{},
-    message:'Something went wrong, cannot process the routes',
-    success: false
-}
-const successResponseBody = {
-    err:{},
-    data:{},
-    message:'Successfully processed the request',
-    success: true
-}
+import {successResponseBody,errorResponseBody} from '../utils/responsebody.js';
+
 const createMovie = async(req,res) =>{
-    try{//********DOUBT*****************/
-        const movie = await Movie.create(req.body);
-        return res.status(201).json({
-            success:true,
-            error:{},
-            data: movie,
-            message: 'Successfully created a new movie',
-        })
+    try{
+        const movie = await movieService.createMovie(req.body);
+        successResponseBody.data = movie;
+        successResponseBody.message = "Successfully created the movie";
+        return res.status(201).json(successResponseBody);
     } catch(err){
         console.log(err);
-        return res.status(500).json({
-            success: true,
-            error: err,
-            data:{},
-            message: 'Something went wrong'
-        });
+        return res.status(500).json(errorResponseBody);
     }
 
 };
 //----------------------------------------------------------------------------------------------------
 const deleteMovie = async(req,res) =>{
     try{
-        const response = await Movie.deleteOne({
-            _id: req.params.Id
-        });
-        return res.status(200).json({
-            success:true,
-            error: {},
-            message:'Successfully deleted the movie',
-            data: response
-        });
+        const response = await movieService.deleteMovie(req.params.Id);
+        successResponseBody.data = response;
+        successResponseBody.message = "Successfully deleted the movie";
+        return res.status(200).json(successResponseBody);
     }catch(err){
         console.log(err);
-        return res.status(500).json({
-            success:false,
-            error:err,
-            message:'Something went wrong',
-            data:{}
-        });
+        return res.status(500).json(errorResponseBody);
     }
 }
 //--------------------------------------------------------------------------------------------------

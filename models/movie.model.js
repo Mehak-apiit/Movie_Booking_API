@@ -32,7 +32,7 @@ const movieSchema = new mongoose.Schema({
         type:String,
         required: true,
         default: "RELEASED",
-     }
+     }//TIMESTAMP IS TRUE HERE WHAT IS THE FUNCTION OF TIMESTAMP
 },{timestamps: true});
 const Movie = mongoose.model('Movie',movieSchema)// yaha phle model ka nam then schema pass then collection name
 export default Movie
