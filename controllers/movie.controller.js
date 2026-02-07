@@ -1,6 +1,6 @@
 import { response } from 'express';
 import Movie from '../models/movie.model.js'
-import { getMovieByIdService, createMovieService, deleteMovieService, updateMovieService } from "../services/movie.service.js";
+import { getMovieByIdService, createMovieService, deleteMovieService, updateMovieService, fetchMoviesService } from "../services/movie.service.js";
 import { successResponseBody, errorResponseBody } from '../utils/responsebody.js';
 
 const createMovie = async (req, res) => {
@@ -52,8 +52,8 @@ const getMovie = async (req, res) => {
 const updateMovie = async (req, res) => {
     try {
         const response = await updateMovieService(req.params.id, req.body);
-        console.log(req.params.id,req.body);
-        
+        console.log(req.params.id, req.body);
+
         if (response.err) {
             errorResponseBody.err = response.err;
             errorResponseBody.message = "The updates that we are trying to apply does not validate the schema";
@@ -67,4 +67,19 @@ const updateMovie = async (req, res) => {
         return res.status(500).json(errorResponseBody);
     }
 }
-export { createMovie, deleteMovie, getMovie, updateMovie };
+const getMovies = async (req, res) => {
+    try {
+        const response = await fetchMoviesService(req.query);
+        if (response.err) {
+            errorResponseBody.err = response.err;
+            return res.status(response.code).json(errorResponseBody);
+        
+        }
+        successResponseBody.data = response;
+        return res.status(200).json(successResponseBody);
+    }catch(error){
+        console.log(error);
+        return res.status(500).json(errorResponseBody);
+    }
+}
+export { createMovie, deleteMovie, getMovie, updateMovie ,getMovies};

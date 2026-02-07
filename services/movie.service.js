@@ -56,4 +56,19 @@ const updateMovieService = async (id, data) => {
     }
 
 }
-export { getMovieByIdService, createMovieService, deleteMovieService, updateMovieService }
+//----------------------------------------------------------------------------------------------------
+const fetchMoviesService = async (filter)=>{
+    let query ={};
+    if(filter.name){
+        query.name = filter.name;
+    }
+    let movies = await Movie.find(query);
+    if(!movies){
+        return {
+            err:"Not able to find the queries movies",
+            code: 404
+        }
+    }
+    return movies;
+}
+export { getMovieByIdService, createMovieService, deleteMovieService, updateMovieService,fetchMoviesService }
