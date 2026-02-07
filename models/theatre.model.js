@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 const theatreSchema  = new mongoose.Schema({
     name:{
         type: String,
-        required: true
+        required: true,
+        minLength: 5
     },
     description: String,
     city:{
@@ -11,7 +12,7 @@ const theatreSchema  = new mongoose.Schema({
     },
     pincode:{
         type: Number,
-        required: true
+        required: true                              
     },
     address: String,
 },{timestamps: true});

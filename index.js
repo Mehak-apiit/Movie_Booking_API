@@ -3,6 +3,7 @@ import express from 'express'
 import env from 'dotenv'
 import connectDB from './config/db.js'
 import routes from "./routes/movie.routes.js";
+import theatreRoutes from './routes/theatre.routes.js';
 
 
 connectDB()
@@ -15,6 +16,7 @@ app.use(express.urlencoded({extended: true}))
 //}))
 //app.use(bodyParser.json())
 routes(app);
+theatreRoutes(app);
 app.listen(process.env.PORT,()=>{
     // this callback gets executed once we successfully start
     console.log(`Server is running on port ${process.env.PORT}`)
