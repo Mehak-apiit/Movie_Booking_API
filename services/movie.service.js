@@ -1,22 +1,59 @@
 import Movie from '../models/movie.model.js';
-const createMovie =  async (data)=>{
-    const movie = await Movie.create(data);
-    return movie;
+const createMovieService = async (data) => {
+    try {
+        console.log(data);
+        const movie = await Movie.create(data);
+        console.log(movie);
+        return movie;
+    } catch (error) {
+        if (error.name == 'ValidationError') {
+            let err = {};
+            Object.keys(error.errors).forEach((key) => {
+                console.log(error.errors[key]);
+                err[key] = error.errors[key].message;
+            });
+            console.log(err);
+            return { err: err, code: 422 };
+        } else {
+            throw error;
+        }
+    }
 }
-const deleteMovie = async(id) =>{
+const deleteMovieService = async (id) => {
     const response = await Movie.findByIdAndDelete(id);
 }
-const getMovieById = async (id)=>{
+const getMovieByIdService = async (id) => {
     const movie = await Movie.findById(id);
-    if(!movie){
+    if (!movie) {
         return {
             err: "No movie found for the corresponding id provided",
-            code:404
+            code: 404
         };
     }
     return {
         data: movie,
-        code:200
+        code: 200
     };
 };
-export {getMovieById,createMovie,deleteMovie}
+//----------------------------------------------------------------------------------------------
+const updateMovieService = async (id, data) => {
+    try {
+        const movie = await Movie.findByIdAndUpdate(id, data, { new: true, runValidators: true });
+        return movie;
+    } catch (error) {
+        if (error.name == 'ValidationError') {
+            let err = {};
+            Object.keys(error.errors).forEach((key) => {
+                console.log(error.errors[key]);
+                err[key] = error.errors[key].message;
+            });
+            console.log(err);
+            return { err: err, code: 422 };
+        } else {
+            throw error;
+        }
+
+    }
+
+}
+export { getMovieByIdService, createMovieService, deleteMovieService, updateMovieService }

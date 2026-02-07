@@ -1,38 +1,38 @@
 import mongoose from "mongoose";
 const movieSchema = new mongoose.Schema({
-    name:{
-        type:String,
+    name: {
+        type: String,
         required: true
+
     },
-    description:{
-        type:String,
+    description: {
+        type: String,
         required: true
     },
     casts: {
         type: [String],
         required: true
     },
-    trailerUrl:{
-        type:String,
+    trailerUrl: {
+        type: String,
         required: true
     },
     language: {
-        type:String,
+        type: String,
         required: true,
-     },
-     releaseDate: {
+    },
+    releaseDate: {
         type: String,
         required: true
-     },
-     director:{
+    },
+    director: {
         type: String,
         required: true
-     },
-     releaseStatus:{
-        type:String,
-        required: true,
-        default: "RELEASED",
-     }//TIMESTAMP IS TRUE HERE WHAT IS THE FUNCTION OF TIMESTAMP
-},{timestamps: true});
-const Movie = mongoose.model('Movie',movieSchema)// yaha phle model ka nam then schema pass then collection name
+    },
+    releaseStatus: {
+        type: String,
+        default: "RELEASED"
+    }//TIMESTAMP IS TRUE HERE WHAT IS THE FUNCTION OF TIMESTAMP
+}, { timestamps: true });
+const Movie = mongoose.model('Movie', movieSchema)// yaha phle model ka nam then schema pass then collection name
 export default Movie
