@@ -13,7 +13,7 @@ const theatreSchema  = new mongoose.Schema({
         type: Number,
         required: true
     },
-    address: String
+    address: String,
 },{timestamps: true});
 const Theatre = mongoose.model('Theatre',theatreSchema)
-export default Theatre;
+export default Theatre; 
