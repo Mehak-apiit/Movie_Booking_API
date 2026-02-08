@@ -1,4 +1,4 @@
-import {createTheatreService,getAllTheatresService,getTheatreService} from "../services/theatre.service.js";
+import {createTheatreService,getAllTheatresService,getTheatreService,deleteTheatreService} from "../services/theatre.service.js";
 import {successResponseBody,errorResponseBody} from '../utils/responsebody.js';
 const create = async(req,res) =>{
     try{
@@ -45,4 +45,20 @@ const getTheatres = async(req,res) =>{
         return res.status(500).json(errorResponseBody);
     }
 }
-export {create,getTheatre,getTheatres};
+//-------------------------------------------------------------------------------------------------
+const destroy = async(req,res) =>{
+    try{
+        const response = await deleteTheatreService(req.params.id);
+        if(response.err){
+            errorResponseBody.err = response.err;
+            return res.status(response.code).json(errorResponseBody);
+        }
+        successResponseBody.data = response;
+        successResponseBody.message = "Successfully deleted the given theatre";
+        return res.status(200).json(successResponseBody);
+    }catch(error){
+        errorResponseBody.err = error;
+        return res.status(500).json(errorResponseBody);
+    }
+}
+export {create,getTheatre,getTheatres,destroy};

@@ -43,4 +43,20 @@ const getAllTheatresService = async()=>{
         throw error;
     }
 }
-export {createTheatreService, getTheatreService,getAllTheatresService} ;
+//--------------------------------------------------------------------------------------------------
+const deleteTheatreService = async(id) =>{
+    try{
+        const response = await Theatre.findByIdAndDelete(id);
+        if(!response){
+            return {
+                err: "No record of a theatre found for the given id",
+                code: 404
+            }
+        }
+        return response;
+    }catch(error){
+        console.log(error);
+        throw error;
+    }
+}
+export {createTheatreService, getTheatreService,getAllTheatresService,deleteTheatreService};
