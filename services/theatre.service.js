@@ -4,7 +4,7 @@ const createTheatreService = async(data)=>{
         const response = await Theatre.create(data);
         return response;
     }
-    catch(err){
+    catch(error){
         if(error.name == 'ValidationError'){
             let err ={};
             Object.keys(error.errors).forEach((key)=>{
@@ -12,7 +12,7 @@ const createTheatreService = async(data)=>{
             });
             return {err: err, code: 422};
         }
-        console.log(err);
+        console.log(error);
         throw err;
     }
 }
