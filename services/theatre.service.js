@@ -16,4 +16,21 @@ const createTheatreService = async(data)=>{
         throw err;
     }
 }
-export default createTheatreService ;
+//-----------------------------------------------------------------------------------------------
+const getTheatreService = async (id)=>{
+    try{
+        const response = await Theatre.findById(id);
+        if(!response){
+            // no record found for the given id
+            return {
+                err: "No theatre found for the given id",
+                code: 404
+            }
+        }
+        return response;
+    }catch(error){
+        console.log(error);
+        throw error;
+    }
+}
+export {createTheatreService, getTheatreService} ;
