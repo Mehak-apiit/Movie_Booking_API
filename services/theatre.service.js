@@ -46,6 +46,7 @@ const getAllTheatresService = async()=>{
 //--------------------------------------------------------------------------------------------------
 const deleteTheatreService = async(id) =>{
     try{
+    
         const response = await Theatre.findByIdAndDelete(id);
         if(!response){
             return {

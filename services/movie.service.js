@@ -1,3 +1,4 @@
+import { response } from 'express';
 import Movie from '../models/movie.model.js';
 const createMovieService = async (data) => {
     try {
@@ -20,7 +21,27 @@ const createMovieService = async (data) => {
     }
 }
 const deleteMovieService = async (id) => {
-    const response = await Movie.findByIdAndDelete(id);
+    try{
+        const checkMovie =  await Movie.findOne({id});
+        console.log(checkMovie);
+        if(!checkMovie){
+              throw {
+                err: "No movie record found for the id provided",
+                code: 404
+            }
+         }
+        const resonse = await Movie.findByIdAndDelete(id);
+        if(!response){
+            return {
+                err: "No movie record found for the id provided",
+                code: 404
+            }
+        }
+        return response
+    }catch(error){
+        console.log(error);
+        throw error;
+    }
 }
 const getMovieByIdService = async (id) => {
     const movie = await Movie.findById(id);
