@@ -33,4 +33,14 @@ const getTheatreService = async (id)=>{
         throw error;
     }
 }
-export {createTheatreService, getTheatreService} ;
+//---------------------------------------------------------------------------------------------------
+const getAllTheatresService = async()=>{
+    try{
+        const response = await Theatre.find({});
+        return response;
+    }catch(errror){
+        console.log(error);
+        throw error;
+    }
+}
+export {createTheatreService, getTheatreService,getAllTheatresService} ;

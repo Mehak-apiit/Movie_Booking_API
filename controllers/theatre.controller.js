@@ -1,4 +1,4 @@
-import {createTheatreService,getTheatreService} from "../services/theatre.service.js";
+import {createTheatreService,getAllTheatresService,getTheatreService} from "../services/theatre.service.js";
 import {successResponseBody,errorResponseBody} from '../utils/responsebody.js';
 const create = async(req,res) =>{
     try{
@@ -33,4 +33,16 @@ const getTheatre = async(req,res)=>{
     }
 
 }
-export {create,getTheatre};
+//----------------------------------------------------------------------------------------------
+const getTheatres = async(req,res) =>{
+    try{
+        const response = await getAllTheatresService();
+        successResponseBody.data = response;
+        successResponseBody.message = "Successfully fetched all the theartres";
+        return res.status(200).json(successResponseBody);
+    }catch(error){
+        errorResponseBody.err = error;
+        return res.status(500).json(errorResponseBody);
+    }
+}
+export {create,getTheatre,getTheatres};
