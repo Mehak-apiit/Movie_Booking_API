@@ -1,4 +1,4 @@
-import {createTheatreService,getAllTheatresService,getTheatreService,deleteTheatreService} from "../services/theatre.service.js";
+import {createTheatreService,getAllTheatresService,getTheatreService,deleteTheatreService,updateMoviesInTheatres} from "../services/theatre.service.js";
 import {successResponseBody,errorResponseBody} from '../utils/responsebody.js';
 const create = async(req,res) =>{
     try{
@@ -61,4 +61,27 @@ const destroy = async(req,res) =>{
         return res.status(500).json(errorResponseBody);
     }
 }
-export {create,getTheatre,getTheatres,destroy};
+//------------------------------------------------------------------------------------------------------
+const updateMovies = async(req,res)=>{
+    try{
+        const response = await updateMoviesInTheatres(
+            req.params.id,
+            req.body.movieIds,
+            req.body.insert
+        );
+        if(response.err){
+            errorResponseBody.err = response.err;
+            return res.status(response.code).json(errorResponseBody);
+            
+        }
+        successResponseBody.data = response;
+        successResponseBody.message = "successfully updated movies in the theatre";
+        return res.status(200).json(successResponseBody);
+    }catch(error){
+        console.log(error);
+        errorResponseBody.err=error;
+        return res.status(500).json(errorResponseBody);
+    }
+}
+
+export {create,getTheatre,getTheatres,destroy,updateMovies};
