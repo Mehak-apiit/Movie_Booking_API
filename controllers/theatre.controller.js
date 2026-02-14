@@ -36,7 +36,7 @@ const getTheatre = async(req,res)=>{
 //----------------------------------------------------------------------------------------------
 const getTheatres = async(req,res) =>{
     try{
-        const response = await getAllTheatresService();
+        const response = await getAllTheatresService(req.query);
         successResponseBody.data = response;
         successResponseBody.message = "Successfully fetched all the theartres";
         return res.status(200).json(successResponseBody);
@@ -82,6 +82,7 @@ const updateMovies = async(req,res)=>{
         errorResponseBody.err=error;
         return res.status(500).json(errorResponseBody);
     }
-}
+};
+
 
 export {create,getTheatre,getTheatres,destroy,updateMovies};

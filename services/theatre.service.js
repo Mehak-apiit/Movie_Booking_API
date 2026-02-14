@@ -34,9 +34,21 @@ const getTheatreService = async (id)=>{
     }
 }
 //---------------------------------------------------------------------------------------------------
-const getAllTheatresService = async()=>{
+const getAllTheatresService = async(data)=>{
     try{
-        const response = await Theatre.find({});
+        let query = {};
+        if(data && data.city){
+            // this checks whether city is present in query parameter or not
+            query.city = data.city;
+        }
+        if(data && data.pincode){
+            // this checks whether pincode is present in the query parameter or not
+            query.pincode = data.pincode;
+        }
+        if(data && data.name){
+            query.name = data.name;
+        }
+        const response = await Theatre.find(query);
         return response;
     }catch(errror){
         console.log(error);

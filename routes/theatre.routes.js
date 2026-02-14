@@ -6,5 +6,6 @@ const theatreRoutes = (app) => {
     app.get('/mba/api/vi/theatres', getTheatres);
     app.delete('/mba/api/vi/theatres/:id', destroy);
     app.patch('/mba/api/vi/theatres/:id/movies',validateUpdateMoviesRequest,updateMovies);
+    app.put('/mba/api/vi/theatres/:id',updateMovies);
 }
 export default theatreRoutes;
