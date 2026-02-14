@@ -73,30 +73,35 @@ const deleteTheatreService = async(id) =>{
     }
 }
 const updateMoviesInTheatres = async(theatreId,movieIds,insert) =>{
-    const theatre = await Theatre.findById(theatreId);
-    if(!theatre){
-        return {
-            err:"No such theatre found for the id provided",
-            code: 404
-        };
-    }
-    if(insert){
-        //we need to add movies
-        movieIds.forEach(movieId =>{
-            theatre.movies.push(movieId);
-
-        });
-
+    try{
+        let theatre;
+        if(insert){
+            // we need to add movies
+            theatre = await Theatre.findByIdAndUpdate(
+                {_id: theatreId},
+                {$addToSet: {movies: {$each: movieIds}}},
+                {new: true}
+            );
         }else{
-            //we need to remove movies
-            let saveMovieIds = theatre.movies;
-            movieIds.forEach(movieId =>{
-                saveMovieIds = saveMovieIds.filter(smi => smi == movieId);
-            });
-            theatre.movies = saveMovieIds;
+            // we need to remove movies
+            theatre = await Theatre.findByIdAndUpdate(
+                {_id: theatreId},
+                {$pull: {movies: {$in: movieIds}}},
+                {new: true}
+
+            );
         }
-        await theatre.save();
         return theatre.populate('movies');
+    }catch(error){
+        if(error.name == 'TypeError'){
+            return {
+                code: 404,
+                err: 'No theatre found for the given id'
+            }
+        }
+        console.log("Error is", error);
+        throw error;
     }
+}
 
 export {createTheatreService, getTheatreService,getAllTheatresService,deleteTheatreService,updateMoviesInTheatres};
