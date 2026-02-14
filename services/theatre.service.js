@@ -37,6 +37,7 @@ const getTheatreService = async (id)=>{
 const getAllTheatresService = async(data)=>{
     try{
         let query = {};
+        let pagination = {};
         if(data && data.city){
             // this checks whether city is present in query parameter or not
             query.city = data.city;
@@ -48,7 +49,14 @@ const getAllTheatresService = async(data)=>{
         if(data && data.name){
             query.name = data.name;
         }
-        const response = await Theatre.find(query);
+        if(data && data.limit){
+            pagination.limit = data.limit;
+        }
+        if(data && data.skip){
+            let perPage = (data.limit) ? data.limit : 3;
+            pagination.skip = data.skip*limit;
+        }
+        const response = await Theatre.find(query,{},pagination);
         return response;
     }catch(errror){
         console.log(error);
