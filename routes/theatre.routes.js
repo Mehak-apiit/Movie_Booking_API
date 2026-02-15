@@ -1,4 +1,4 @@
-import { getTheatre, create, getTheatres, destroy, updateMovies } from "../controllers/theatre.controller.js";
+import { getTheatre, create, getTheatres, destroy, updateMovies,getMovies } from "../controllers/theatre.controller.js";
 import { validateTheatreCreateRequest, validateUpdateMoviesRequest } from "../middlewares/theatre.middleware.js";
 const theatreRoutes = (app) => {
     app.post('/mba/api/vi/theatres', validateTheatreCreateRequest, create);
@@ -7,5 +7,6 @@ const theatreRoutes = (app) => {
     app.delete('/mba/api/vi/theatres/:id', destroy);
     app.patch('/mba/api/vi/theatres/:id/movies',validateUpdateMoviesRequest,updateMovies);
     app.put('/mba/api/vi/theatres/:id',updateMovies);
+    app.get('/mba/api/vi/theatres/:id/movies',getMovies);
 }
 export default theatreRoutes;
