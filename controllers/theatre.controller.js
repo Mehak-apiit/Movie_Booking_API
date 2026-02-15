@@ -1,4 +1,4 @@
-import {createTheatreService,getAllTheatresService,getTheatreService,deleteTheatreService,updateMoviesInTheatres, getMoviesInATheatre} from "../services/theatre.service.js";
+import {createTheatreService,getAllTheatresService,getTheatreService,deleteTheatreService,updateMoviesInTheatres, getMoviesInATheatre,checkMovieInATheatreService } from "../services/theatre.service.js";
 import {successResponseBody,errorResponseBody} from '../utils/responsebody.js';
 const create = async(req,res) =>{
     try{
@@ -98,7 +98,24 @@ const getMovies = async(req,res) =>{
         errorResponseBody.err = error;
         return res.status(500).json(errorResponseBody);
     }
+};
+//-----------------------------------------------------------------------------------------------
+const checkMovie = async(req,res) =>{
+    try{
+        const response = await checkMovieInATheatreService(req.params.theatreId,req.params.movieId);
+        if(response.err){
+            errorResponseBody.err = response.err;
+            return res.status(response.status).json(errorResponseBody);
+        }
+        successResponseBody.data = response;
+        successResponseBody.message = "Successfully checked if movie is present in the theatre";
+        return res.status(200).json(successResponseBody);//THIS ONE
+
+    }catch(error){
+        errorResponseBody.err = error;
+        return res.status(500).json(errorResponseBody);
+    }
 }
 
 
-export {create,getTheatre,getTheatres,destroy,updateMovies,getMovies};
+export {create,getTheatre,getTheatres,destroy,updateMovies,getMovies,checkMovie};

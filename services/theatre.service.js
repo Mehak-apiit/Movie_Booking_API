@@ -1,27 +1,27 @@
 import Theatre from "../models/theatre.model.js";
 import Movie from "../models/movie.model.js";
-const createTheatreService = async(data)=>{
-    try{
+const createTheatreService = async (data) => {
+    try {
         const response = await Theatre.create(data);
         return response;
     }
-    catch(error){
-        if(error.name == 'ValidationError'){
-            let err ={};
-            Object.keys(error.errors).forEach((key)=>{
+    catch (error) {
+        if (error.name == 'ValidationError') {
+            let err = {};
+            Object.keys(error.errors).forEach((key) => {
                 err[key] = error.errors[key].message;
             });
-            return {err: err, code: 422};
+            return { err: err, code: 422 };
         }
         console.log(error);
         throw err;
     }
 }
 //-----------------------------------------------------------------------------------------------
-const getTheatreService = async (id)=>{
-    try{
+const getTheatreService = async (id) => {
+    try {
         const response = await Theatre.findById(id);
-        if(!response){
+        if (!response) {
             // no record found for the given id
             return {
                 err: "No theatre found for the given id",
@@ -29,83 +29,83 @@ const getTheatreService = async (id)=>{
             }
         }
         return response;
-    }catch(error){
+    } catch (error) {
         console.log(error);
         throw error;
     }
 }
 //---------------------------------------------------------------------------------------------------
-const getAllTheatresService = async(data)=>{
-    try{
+const getAllTheatresService = async (data) => {
+    try {
         let query = {};
         let pagination = {};
-        if(data && data.city){
+        if (data && data.city) {
             // this checks whether city is present in query parameter or not
             query.city = data.city;
         }
-        if(data && data.pincode){
+        if (data && data.pincode) {
             // this checks whether pincode is present in the query parameter or not
             query.pincode = data.pincode;
         }
-        if(data && data.name){
+        if (data && data.name) {
             query.name = data.name;
         }
-        if(data && data.movieId){
-            query.movies = {$all: data.movieId};
+        if (data && data.movieId) {
+            query.movies = { $all: data.movieId };
         }
-        if(data && data.limit){
+        if (data && data.limit) {
             pagination.limit = data.limit;
         }
-        if(data && data.skip){
+        if (data && data.skip) {
             let perPage = (data.limit) ? data.limit : 3;
-            pagination.skip = data.skip*perPage;
+            pagination.skip = data.skip * perPage;
         }
-        const response = await Theatre.find(query,{},pagination);
+        const response = await Theatre.find(query, {}, pagination);
         return response;
-    }catch(errror){
+    } catch (errror) {
         console.log(error);
         throw error;
     }
 }
 //--------------------------------------------------------------------------------------------------
-const deleteTheatreService = async(id) =>{
-    try{
-    
+const deleteTheatreService = async (id) => {
+    try {
+
         const response = await Theatre.findByIdAndDelete(id);
-        if(!response){
+        if (!response) {
             return {
                 err: "No record of a theatre found for the given id",
                 code: 404
             }
         }
         return response;
-    }catch(error){
+    } catch (error) {
         console.log(error);
         throw error;
     }
 }
-const updateMoviesInTheatres = async(theatreId,movieIds,insert) =>{
-    try{
+const updateMoviesInTheatres = async (theatreId, movieIds, insert) => {
+    try {
         let theatre;
-        if(insert){
+        if (insert) {
             // we need to add movies
             theatre = await Theatre.findByIdAndUpdate(
-                {_id: theatreId},
-                {$addToSet: {movies: {$each: movieIds}}},
-                {new: true}
+                { _id: theatreId },
+                { $addToSet: { movies: { $each: movieIds } } },
+                { new: true }
             );
-        }else{
+        } else {
             // we need to remove movies
             theatre = await Theatre.findByIdAndUpdate(
-                {_id: theatreId},
-                {$pull: {movies: {$in: movieIds}}},
-                {new: true}
+                { _id: theatreId },
+                { $pull: { movies: { $in: movieIds } } },
+                { new: true }
 
             );
         }
         return theatre.populate('movies');
-    }catch(error){
-        if(error.name == 'TypeError'){
+    } catch (error) {
+        if (error.name == 'TypeError') {
             return {
                 code: 404,
                 err: 'No theatre found for the given id'
@@ -116,20 +116,36 @@ const updateMoviesInTheatres = async(theatreId,movieIds,insert) =>{
     }
 }
 //--------------------------------------------------------------------------------------------
-const getMoviesInATheatre = async(id) => {
-    try{
-        const theatre = await Theatre.findById(id,{name: 1,movies: 1,address: 1});
-        if(!theatre){
+const getMoviesInATheatre = async (id) => {
+    try {
+        const theatre = await Theatre.findById(id, { name: 1, movies: 1, address: 1 });
+        if (!theatre) {
             return {
                 err: 'No theatre with the given id found',
                 code: 404
             }
         }
         return theatre;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+//----------------------------------------------------------------------------------------------------
+const checkMovieInATheatreService = async(theatreId,movieId) => {
+    try{
+        let response = await Theatre.findById(theatreId);
+        if(!response){
+            return{
+                err: "No such theatre found for the given id",
+                code: 404
+            }
+        }
+        return response.movies.indexOf(movieId) != -1;
     }catch(error){
         console.log(error);
         throw error;
     }
 }
 
-export {createTheatreService, getTheatreService,getAllTheatresService,deleteTheatreService,updateMoviesInTheatres,getMoviesInATheatre};
+export { createTheatreService, getTheatreService, getAllTheatresService, deleteTheatreService, updateMoviesInTheatres, getMoviesInATheatre,checkMovieInATheatreService};
