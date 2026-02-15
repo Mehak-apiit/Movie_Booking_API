@@ -1,4 +1,5 @@
 import Theatre from "../models/theatre.model.js";
+import Movie from "../models/movie.model.js";
 const createTheatreService = async(data)=>{
     try{
         const response = await Theatre.create(data);
@@ -49,12 +50,15 @@ const getAllTheatresService = async(data)=>{
         if(data && data.name){
             query.name = data.name;
         }
+        if(data && data.movieId){
+            query.movies = {$all: data.movieId};
+        }
         if(data && data.limit){
             pagination.limit = data.limit;
         }
         if(data && data.skip){
             let perPage = (data.limit) ? data.limit : 3;
-            pagination.skip = data.skip*limit;
+            pagination.skip = data.skip*perPage;
         }
         const response = await Theatre.find(query,{},pagination);
         return response;
