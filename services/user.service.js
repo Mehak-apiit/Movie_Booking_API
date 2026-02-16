@@ -1,0 +1,11 @@
+import User from '../models/user.model.js';
+const createUser = async (data) =>{
+    try{
+        const response = await User.create(data);
+        return response;
+    }catch(error){
+        console.log(error);
+        throw error;
+    }
+}
+export default createUser;
