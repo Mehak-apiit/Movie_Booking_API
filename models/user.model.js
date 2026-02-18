@@ -54,8 +54,9 @@ const userSchema = new mongoose.Schema({
     //}
 
 //});
-userSchema.methods.isValidPassword = async(plainPassword) =>{
+userSchema.methods.isValidPassword = async function (plainPassword){
     const currentUser = this;
+    console.log(plainPassword,currentUser.password);
     const compare = await bcrypt.compare(plainPassword,currentUser.password);
     return compare;
 }
