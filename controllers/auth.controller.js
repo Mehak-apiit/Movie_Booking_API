@@ -16,7 +16,7 @@ const signup = async (req, res) => {
 const signin = async (req, res) => {
     try {
         const user = await getUserByEmail(req.body.email);
-        const isValidPassword = await isValidPassword(req.body.password);
+        const isValidPassword = await user.isValidPassword(req.body.password);
         if (!isValidPassword) {
             throw { err: 'Invalid password for the given email', code: 401 };
         }
@@ -25,7 +25,7 @@ const signin = async (req, res) => {
                 id: user.id, email: user.email
             },
             process.env.AUTH_KEY,
-            { expression: '1h' }
+            { expiresIn: '1h' }
         )
         successResponseBody.message = "Successfully logged in";
         successResponseBody.data = {
