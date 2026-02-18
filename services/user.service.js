@@ -1,6 +1,7 @@
 import User from '../models/user.model.js';
 import bcrypt from "bcryptjs";
 import { USER_ROLE, USER_STATUS } from '../utils/constants.js';
+import { errorResponseBody } from '../utils/responsebody.js';
 const createUser = async (data) => {
     try {
         if (!data.userRole || data.userRole == USER_ROLE.customer) {
@@ -56,6 +57,14 @@ const getUserById = async(id) => {
         console.log(error);
         throw error;
     }
+};
+const resetPasswordService = async(req,res) => {
+    try{
+        const user = await getUserById(req.body.id);
+    }catch(error){
+        errorResponseBody.err = error;
+        return res.status(500).json(errorResponseBody);
+    }
 }
 
-export {createUser,getUserByEmail,getUserById};
+export {createUser,getUserByEmail,getUserById,resetPasswordServiceesetPasswordService};
