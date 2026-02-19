@@ -65,6 +65,29 @@ const resetPasswordService = async(req,res) => {
         errorResponseBody.err = error;
         return res.status(500).json(errorResponseBody);
     }
+};
+const updateUserRoleorStatus = async(data,userId) =>{
+    try{
+        let updateQuery = {};
+        if(data.userRole) updateQuery.userRole = data.userRole;
+        if(data.userStatus) updateQuery.userStatus = data.userStatus;
+        let response = await User.findOneAndUpdate({
+            id: userId
+
+        },updateQuery,{new: true,runValidators: true});
+        if(!response) throw {err: 'No user found for the given id',code: 404};
+        return response;
+    }catch (error){
+        console.log(error,error.name);
+        if(error.name == 'ValidationError'){
+            let err = {};
+            Object.keys(error.errors).forEach(key => {
+                err[key] = error.errors[key].message;
+            });
+            throw {err: err, code:400};
+        }
+        throw error;
+}
 }
 
-export {createUser,getUserByEmail,getUserById,resetPasswordServiceesetPasswordService};
+export {createUser,getUserByEmail,getUserById,resetPasswordService,updateUserRoleorStatus}

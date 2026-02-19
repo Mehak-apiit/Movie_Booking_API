@@ -5,6 +5,7 @@ import connectDB from './config/db.js'
 import routes from "./routes/movie.routes.js";
 import theatreRoutes from './routes/theatre.routes.js';
 import authRoutes from './routes/auth.routes.js';
+import userRoutes from './routes/user.routes.js';
 
 
 connectDB()
@@ -19,6 +20,8 @@ app.use(express.urlencoded({extended: true}))
 routes(app);
 theatreRoutes(app);
 authRoutes(app);
+userRoutes(app);
+
 app.listen(process.env.PORT,()=>{
     // this callback gets executed once we successfully start
     console.log(`Server is running on port ${process.env.PORT}`)
