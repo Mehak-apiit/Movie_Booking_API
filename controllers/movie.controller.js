@@ -24,12 +24,12 @@ const createMovie = async (req, res) => {
 const deleteMovie = async (req, res) => {
     try {
         const response = await deleteMovieService(req.params.Id);
-       
+
         successResponseBody.data = response;
         successResponseBody.message = "Successfully deleted the movie";
         return res.status(200).json(successResponseBody);
     } catch (err) {
-         if(err){
+        if (err) {
             errorResponseBody.err = err;
             return res.status(err.code).json(errorResponseBody);
         }
@@ -57,34 +57,30 @@ const getMovie = async (req, res) => {
 const updateMovie = async (req, res) => {
     try {
         const response = await updateMovieService(req.params.id, req.body);
-        console.log(req.params.id, req.body);
-
-        if (response.err) {
-            errorResponseBody.err = response.err;
-            errorResponseBody.message = "The updates that we are trying to apply does not validate the schema";
-            return res.status(response.code).json(errorResponseBody);
-        }
         successResponseBody.data = response;
-        return res.status(200).json(successResponseBody);
+        return res.status(STATUS_CODES.OK).json(successResponseBody);
     } catch (err) {
-        console.log(err);
+        if (error.err) {
+            errorResponseBody.err = error.err;
+            return res.status(error.code).json(errorResponseBody);
+        }
         errorResponseBody.err = err;
-        return res.status(500).json(errorResponseBody);
+        return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
 }
 const getMovies = async (req, res) => {
     try {
         const response = await fetchMoviesService(req.query);
+        successResponseBody.data = response;
+        return res.status(STATUS_CODES.OK).json(successResponseBody);
+    } catch (error) {
         if (response.err) {
             errorResponseBody.err = response.err;
             return res.status(response.code).json(errorResponseBody);
-        
+
         }
-        successResponseBody.data = response;
-        return res.status(200).json(successResponseBody);
-    }catch(error){
-        console.log(error);
-        return res.status(500).json(errorResponseBody);
+        errorResponseBody.err = err;
+        return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
 }
-export { createMovie, deleteMovie, getMovie, updateMovie ,getMovies};
+export { createMovie, deleteMovie, getMovie, updateMovie, getMovies };
