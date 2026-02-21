@@ -1,5 +1,6 @@
 import {createTheatreService,getAllTheatresService,getTheatreService,deleteTheatreService,updateMoviesInTheatres, getMoviesInATheatre,checkMovieInATheatreService } from "../services/theatre.service.js";
 import {successResponseBody,errorResponseBody} from '../utils/responsebody.js';
+import {STATUS_CODES} from '../utils/constants.js';
 const create = async(req,res) =>{
     try{
         const response = await createTheatreService(req.body);
@@ -10,10 +11,10 @@ const create = async(req,res) =>{
         }
         successResponseBody.data = response;
         successResponseBody.message = "Successfully created the theatre";
-        return res.status(201).json(successResponseBody);
+        return res.status(STATUS_CODES.CREATED).json(successResponseBody);
     }catch(error){
         errorResponseBody.err = error;
-        return res.status(500).json(errorResponseBody);
+        return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
 }
 //--------------------------------------------------------------------------------------------------

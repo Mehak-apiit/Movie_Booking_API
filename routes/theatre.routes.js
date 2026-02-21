@@ -1,8 +1,8 @@
 import { getTheatre, create, getTheatres, destroy, updateMovies,getMovies,checkMovie } from "../controllers/theatre.controller.js";
 import { validateTheatreCreateRequest, validateUpdateMoviesRequest } from "../middlewares/theatre.middleware.js";
-import {isAuthenticated} from '../middlewares/auth.middlewares.js';
+import {isAdminorClient, isAuthenticated} from '../middlewares/auth.middlewares.js';
 const theatreRoutes = (app) => {
-    app.post('/mba/api/vi/theatres', validateTheatreCreateRequest, create);
+    app.post('/mba/api/vi/theatres',isAuthenticated,isAdminorClient,validateTheatreCreateRequest, create);
     app.get('/mba/api/vi/theatres/:id', getTheatre);
     app.get('/mba/api/vi/theatres', getTheatres);
     app.delete('/mba/api/vi/theatres/:id',isAuthenticated,destroy);

@@ -5,6 +5,7 @@ const badRequestResponse = {
     message: "Malformed Request | Bad Request"
 
 }
+import {STATUS_CODES } from '../utils/constants.js';
 const validateMovieCreateRequest = async (req, res, next) => {
     //validate the movie name
     if (!req.body.name) {
@@ -17,26 +18,26 @@ const validateMovieCreateRequest = async (req, res, next) => {
         return res.status(400).json(badRequestResponse);
     }
     // validate the movie casts
-    if (!req.body.casts || !(req.body.casts instanceof Array) || req.body.casts <= 0) {
+    if (!req.body.casts || !(req.body.casts instanceof Array) || req.body.lenth <= 0) {
         badRequestResponse.err = "The casts of the movie is not present in the request";
-        return res.status(400).json(badRequestResponse);
+        return res.status(STATUS_CODES.BAD_REQUEST).json(badRequestResponse);
 
     }
     //validate the movie trailer url 
     if (!req.body.trailerUrl) {
         badRequestResponse.err = "The trailerUrl of the movie is not present in the request";
-        return res.status(400).json(badRequestResponse);
+        return res.status(STATUS_CODES.BAD_REQUEST).json(badRequestResponse);
     }
     //validate the release date of the movie
     if (!req.body.releaseDate) {
         badRequestResponse.err = "The releaseDate of the movie is not present in the request";
-        return res.status(400).json(badRequestResponse);
+        return res.status(STATUS_CODES.BAD_REQUEST).json(badRequestResponse);
 
     }
     //validate director of the movie 
     if (!req.body.director) {
         badRequestResponse.err = "The director of the movie is not present in the request";
-        return res.status(400).json(badRequestResponse);
+        return res.status(STATUS_CODES.BAD_REQUEST).json(badRequestResponse);
     }
     next();
 }

@@ -1,5 +1,6 @@
 import Theatre from "../models/theatre.model.js";
 import Movie from "../models/movie.model.js";
+import {STATUS_CODES} from '../utils/constants.js';
 const createTheatreService = async (data) => {
     try {
         const response = await Theatre.create(data);
@@ -11,7 +12,7 @@ const createTheatreService = async (data) => {
             Object.keys(error.errors).forEach((key) => {
                 err[key] = error.errors[key].message;
             });
-            return { err: err, code: 422 };
+            return { err: err, code: STATUS_CODES.UNPROCESSABLE_ENTITY };
         }
         console.log(error);
         throw err;
