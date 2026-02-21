@@ -1,6 +1,7 @@
 import Theatre from "../models/theatre.model.js";
 import Movie from "../models/movie.model.js";
 import {STATUS_CODES} from '../utils/constants.js';
+import { errorResponseBody, successResponseBody } from "../utils/responsebody.js";
 const createTheatreService = async (data) => {
     try {
         const response = await Theatre.create(data);
@@ -22,17 +23,16 @@ const createTheatreService = async (data) => {
 const getTheatreService = async (id) => {
     try {
         const response = await Theatre.findById(id);
-        if (!response) {
-            // no record found for the given id
-            return {
-                err: "No theatre found for the given id",
-                code: 404
-            }
-        }
-        return response;
+        successResponseBody.data = response;
+        successResponseBody.message = "Successflully fetched the data of the theatre";
+        return res.status(STATUS_CODES.OK).json(successResponseBody);
     } catch (error) {
-        console.log(error);
-        throw error;
+        if(error.err){
+            errorResponseBody.err = error.err;
+            return res.status(error.code).json(errorResponseBody)
+        }
+        errorResponseBody.err = error;
+        return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
 }
 //---------------------------------------------------------------------------------------------------
