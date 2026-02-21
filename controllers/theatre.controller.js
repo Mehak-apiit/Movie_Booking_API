@@ -4,15 +4,14 @@ import {STATUS_CODES} from '../utils/constants.js';
 const create = async(req,res) =>{
     try{
         const response = await createTheatreService(req.body);
-        if(response.err){
-            errorResponseBody.err = response.err;
-            errorResponseBody.message = "Validation failed on few parameters of the request body";
-            return res.status(response.code).json(errorResponseBody);
-        }
         successResponseBody.data = response;
         successResponseBody.message = "Successfully created the theatre";
         return res.status(STATUS_CODES.CREATED).json(successResponseBody);
     }catch(error){
+        if(error.err){
+            errorResponseBody.err = error.err;
+            return res.status(error.code).json(errorResponseBody)
+        }
         errorResponseBody.err = error;
         return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
