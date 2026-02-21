@@ -48,7 +48,9 @@ const signin = async (req, res) => {
 };
 const resetPassword = async(req,res) => {
     try{
-        const user = await getUserById(req.body.id);
+        console.log(req.user);
+        const user = await getUserById(req.user);
+        
         const isOldPasswordCorrect = await user.isValidPassword(req.body.oldPassword)
         if(!isOldPasswordCorrect){
             throw {err: 'Invalid old password, please write the correct old password',code:403}

@@ -35,7 +35,6 @@ const createUser = async (data) => {
 const getUserByEmail = async(email) => {
     try{
         const response = await User.findOne({email});
-        console.log(response);
         if(!response){
             throw {err: "No user found for the given email", code:404};
         }

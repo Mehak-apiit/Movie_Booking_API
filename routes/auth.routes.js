@@ -1,5 +1,5 @@
 import { signup, signin, resetPassword } from '../controllers/auth.controller.js';
-import { isAuthenticated, validateSigninRequest, validateSignupRequest } from '../middlewares/auth.middlewares.js';
+import { isAuthenticated, validateResetPasswordRequest, validateSigninRequest, validateSignupRequest } from '../middlewares/auth.middlewares.js';
 const authRoutes = (app) => {
     app.post(
         '/mba/api/vi/auth/signup',validateSignupRequest,signup
@@ -9,6 +9,7 @@ const authRoutes = (app) => {
     );
     app.patch(
         '/mba/api/vi/auth/reset',isAuthenticated,
+        validateResetPasswordRequest,
         resetPassword
     )
 }
