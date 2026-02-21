@@ -4,9 +4,21 @@ const USER_STATUS = {
     rejected: "REJECTED"
 };
 
-const USER_ROLE ={
-    customer:"CUSTOMER",
-    admin:"ADMIN",
-    client:"CLIENT"
+const USER_ROLE = {
+    customer: "CUSTOMER",
+    admin: "ADMIN",
+    client: "CLIENT"
+};
+const STATUS_CODES = {
+    OK: 200,
+    INTERNAL_SERVER_ERROR: 500,
+    CREATED: 201,
+    UNAUTHORISED: 401,
+    NOT_FOUND: 404,
+    BAD_REQUEST: 400
 }
-export {USER_ROLE,USER_STATUS};
+export {
+    USER_ROLE,
+    USER_STATUS,
+    STATUS_CODES
+};

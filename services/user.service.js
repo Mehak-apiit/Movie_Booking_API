@@ -1,6 +1,6 @@
 import User from '../models/user.model.js';
 import bcrypt from "bcryptjs";
-import { USER_ROLE, USER_STATUS } from '../utils/constants.js';
+import { USER_ROLE, USER_STATUS,STATUS_CODES } from '../utils/constants.js';
 import { errorResponseBody } from '../utils/responsebody.js';
 const createUser = async (data) => {
     try {
@@ -72,7 +72,7 @@ const updateUserRoleorStatus = async(data,userId) =>{
         if(data.userStatus) updateQuery.userStatus = data.userStatus;
         let response = await User.findByIdAndUpdate(userId,updateQuery,{
             new: true,runValidators:true});
-        if(!response) throw {err: 'No user found for the given id',code: 404};
+        if(!response) throw {err: 'No user found for the given id',code: STATUS_CODES.NOT_FOUND};
         return response;
     }catch (error){
         console.log(error,error.name);
@@ -81,7 +81,7 @@ const updateUserRoleorStatus = async(data,userId) =>{
             Object.keys(error.errors).forEach(key => {
                 err[key] = error.errors[key].message;
             });
-            throw {err: err, code:400};
+            throw {err: err, code:STATUS_CODES.BAD_REQUEST};
         }
         throw error;
 }
