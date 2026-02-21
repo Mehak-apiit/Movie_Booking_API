@@ -21,13 +21,14 @@ const validateSignupRequest = async (req, res, next) => {
     next();
 };
 const validateSigninRequest = async (req, res, next) => {
+    
     if (!req.body.email) {
         errorResponseBody.err = "No email provided for sign in";
-        return res.status(400).json(errorResponseBody);
+        return res.status( STATUS_CODES.BAD_REQUEST).json(errorResponseBody);
     }
     if (!req.body.password) {
         errorResponseBody.err = "No password for sign in";
-        return res.status(400).json(errorResponseBody);
+        return res.status( STATUS_CODES.BAD_REQUEST).json(errorResponseBody);
     }
     next();
 };
