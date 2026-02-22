@@ -6,17 +6,18 @@ const badRequestResponse = {
 
 }
 
+
 import {STATUS_CODES } from '../utils/constants.js';
 const validateMovieCreateRequest = async (req, res, next) => {
     //validate the movie name
     if (!req.body.name) {
         badRequestResponse.err = "The name of the movie is not present in the request";
-        return res.status(400).json(badRequestResponse);
+        return res.status(STATUS_CODES.BAD_REQUEST).json(badRequestResponse);
     }
     //validate the movie description
     if (!req.body.description) {
         badRequestResponse.err = "The description of the movie is not present in the request";
-        return res.status(400).json(badRequestResponse);
+        return res.status(STATUS_CODES.BAD_REQUEST).json(badRequestResponse);
     }
     // validate the movie casts
     if (!req.body.casts || !(req.body.casts instanceof Array) || req.body.lenth <= 0) {
