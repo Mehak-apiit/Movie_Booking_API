@@ -43,7 +43,7 @@ const getMovieByIdService = async (id) => {
     }
     return {
         data: movie,
-        code: 200
+        code: STATUS_CODES.OK
     };
 };
 //----------------------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ const fetchMoviesService = async (filter)=>{
     if(!movies){
         return {
             err:"Not able to find the queries movies",
-            code: 404
+            code: STATUS_CODES.NOT_FOUND
         }
     }
     return movies;

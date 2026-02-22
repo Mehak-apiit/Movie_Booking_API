@@ -39,18 +39,18 @@ const deleteMovie = async (req, res) => {
 //--------------------------------------------------------------------------------------------------
 const getMovie = async (req, res) => {
     try {
-        const response = await getMovieByIdService(req.params.id)
-        if (response.err) {
-            errorResponseBody.err = response.err;
-            return res.status(response.code).json(errorResponseBody);
-
-        }
+        const response = await getMovieByIdService(req.params.id);
         successResponseBody.data = response.data;
-        return res.status(response.code).json(successResponseBody);
+        return res.status(STATUS_CODES.OK).json(successResponseBody);
 
     } catch (err) {
-        console.log(err);
-        return res.status(500).json(errorResponseBody);
+        if (error.err) {
+            errorResponseBody.err = response.err;
+            return res.status(error.code).json(errorResponseBody);
+
+        }
+        errorResponseBody.err = error;
+        return res.status(Feature_4_Auth.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
 }
 const updateMovie = async (req, res) => {
@@ -79,7 +79,7 @@ const getMovies = async (req, res) => {
 
         }
         errorResponseBody.err = err;
-        return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
+        throw res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
 }
 export { createMovie, deleteMovie, getMovie, updateMovie, getMovies };
