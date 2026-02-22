@@ -18,9 +18,15 @@ const STATUS_CODES = {
     BAD_REQUEST: 400,
     FORBIDDEN:403,
     UNPROCESSABLE_ENTITY: 422
+};
+const BOOKING_STATUS = {
+    cancelled: "CANCELLED",
+    successfull:"SUCCESSFULL",
+    processing:"IN_PROCESS"
 }
 export {
     USER_ROLE,
     USER_STATUS,
-    STATUS_CODES
+    STATUS_CODES,
+    BOOKING_STATUS
 };
