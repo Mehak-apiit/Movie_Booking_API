@@ -1,5 +1,5 @@
 import { successResponseBody,errorResponseBody } from "../utils/responsebody.js";
-import createBooking, { updateBooking } from "../services/booking.service.js";
+import { updateBooking,createBooking } from "../services/booking.service.js";
 import { STATUS_CODES } from "../utils/constants.js";
 
 const create = async(req,res) =>{
@@ -32,5 +32,42 @@ const update = async(req,res) => {
         errorResponseBody.err = error;
         return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
+};
+const getBookings = async(req,res,next) =>{
+    try{
+        const response = await getBookings({userId: req.user});
+        successResponseBody.data = response;
+        successResponseBody.message = "Successfully fetched the bookings";
+        return res.status(STATUS_CODES.OK).json(successResponseBody);
+    }catch(error){
+        errorResponseBody.err = error;
+        return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
+    }
+};
+const getAllBookings = async(req,res,next) =>{
+    try{
+        const response = await getBookings();
+        successResponseBody.data = response;
+        successResponseBody.message = "Successfully fetched the bookings";
+        return res.status(STATUS_CODES.OK).json(successResponseBody);
+    }catch(error){
+        errorResponseBody.err = error;
+        return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
+    }
+};
+const getBookingById = async(req,res,next) =>{
+    try{
+        const response = await getBookingById(req.params.id,req.user);
+        successResponseBody.data = response;
+        successResponseBody.message = "Successfully fetched the booking ";
+        return res.status(STATUS_CODES.OK).json(successResponseBody);
+    }catch(error){
+        if(error.err){
+            errorResponseBody.err = error.err;
+            return res.status(error.code).json(errorResponseBody);
+        }
+        errorResponseBody.err = error;
+        return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
+    }
 }
-export {create,update};
+export {create,update,getBookings,getAllBookings,getBookingById};
