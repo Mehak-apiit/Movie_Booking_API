@@ -55,11 +55,10 @@ const updateMovieService = async (id, data) => {
         if (error.name == 'ValidationError') {
             let err = {};
             Object.keys(error.errors).forEach((key) => {
-                console.log(error.errors[key]);
                 err[key] = error.errors[key].message;
             });
             console.log(err);
-            return { err: err, code: 422 };
+            return { err: err, code: STATUS_CODES.UNPROCESSABLE_ENTITY };
         } else {
             throw error;
         }

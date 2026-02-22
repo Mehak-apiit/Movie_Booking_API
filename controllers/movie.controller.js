@@ -59,12 +59,9 @@ const updateMovie = async (req, res) => {
         successResponseBody.data = response;
         return res.status(STATUS_CODES.OK).json(successResponseBody);
     } catch (err) {
-        if (error.err) {
-            errorResponseBody.err = error.err;
-            return res.status(error.code).json(errorResponseBody);
-        }
+        
         errorResponseBody.err = err;
-        return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
+        throw res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
 }
 const getMovies = async (req, res) => {

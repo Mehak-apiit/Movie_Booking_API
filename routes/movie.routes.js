@@ -7,8 +7,8 @@ const routes =(app) =>{
     app.post('/mba/api/vi/movies',isAuthenticated,isAdminorClient,validateMovieCreateRequest,createMovie);
     app.delete('/mba/api/vi/movies/:Id',isAuthenticated,isAdminorClient,deleteMovie);
     app.get('/mba/api/vi/movies/:id',getMovie);
-    app.put('/mba/api/vi/movies/:id',updateMovie);
-    app.patch('/mba/api/vi/movies/:id',updateMovie);
+    app.put('/mba/api/vi/movies/:id',isAuthenticated,isAdminorClient,updateMovie);
+    app.patch('/mba/api/vi/movies/:id',isAuthenticated,isAdminorClient,updateMovie);
     app.get('/mba/api/vi/movies',getMovies);
 
 };
