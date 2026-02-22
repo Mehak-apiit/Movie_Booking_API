@@ -1,20 +1,18 @@
 import { response } from 'express';
 import Movie from '../models/movie.model.js';
+import {STATUS_CODES} from '../utils/constants.js'
 const createMovieService = async (data) => {
     try {
-        console.log(data);
         const movie = await Movie.create(data);
-        console.log(movie);
         return movie;
     } catch (error) {
         if (error.name == 'ValidationError') {
             let err = {};
             Object.keys(error.errors).forEach((key) => {
-                console.log(error.errors[key]);
                 err[key] = error.errors[key].message;
             });
             console.log(err);
-            return { err: err, code: 422 };
+            throw { err: err, code: STATUS_CODES.UNPROCESSABLE_ENTITY };
         } else {
             throw error;
         }

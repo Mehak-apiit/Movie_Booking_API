@@ -5,6 +5,7 @@ const badRequestResponse = {
     message: "Malformed Request | Bad Request"
 
 }
+
 import {STATUS_CODES } from '../utils/constants.js';
 const validateMovieCreateRequest = async (req, res, next) => {
     //validate the movie name

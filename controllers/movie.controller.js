@@ -2,21 +2,20 @@ import { response } from 'express';
 import Movie from '../models/movie.model.js'
 import { getMovieByIdService, createMovieService, deleteMovieService, updateMovieService, fetchMoviesService } from "../services/movie.service.js";
 import { successResponseBody, errorResponseBody } from '../utils/responsebody.js';
-
+import { STATUS_CODES } from '../utils/constants.js';
 const createMovie = async (req, res) => {
     try {
         const response = await createMovieService(req.body)
-        if (response.err) {
-            errorResponseBody.err = response.err;
-            errorResponseBody.message = "Validation failed on few parameters of the request body";
-            return res.status(response.code).json(errorResponseBody)
-        }
         successResponseBody.data = response;
         successResponseBody.message = "Successfully created the movie";
-        return res.status(201).json(successResponseBody);
+        return res.status(STATUS_CODES.CREATED).json(successResponseBody);
     } catch (err) {
-        console.log(err);
-        return res.status(500).json(errorResponseBody);
+        if (error.err) {
+            errorResponseBody.err = response.err;
+            return res.status(response.code).json(errorResponseBody)
+        }
+        errorResponseBody.err = error;
+        return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
 
 };
