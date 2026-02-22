@@ -16,5 +16,29 @@ const createBooking = async(data) =>{
         }
         throw error;
     }
+};
+const updateBooking = async(data,bookingId) =>{
+    try{
+        const response = await findByIdAndUpdate(bookingId,data,{
+            new: true,runValidators:true
+        });
+        if(!response){
+            throw{
+                err:"No booking found for the given id",
+                code:STATUS_CODES.NOT_FOUND
+            }
+        }
+        return response;
+    }catch(error){
+        if(error.name =='ValidatioinError'){
+            let err = {};
+            Object.keys(error.errors).forEach(key => {
+                err[key] = error.errors[key].message;
+            });
+            throw {err: err,code: STATUS_CODES.UNPROCESSABLE_ENTITY};
+        }
+        console.log(error);
+        throw error;
+    }
 }
-export default createBooking;
+export {createBooking,updateBooking};
