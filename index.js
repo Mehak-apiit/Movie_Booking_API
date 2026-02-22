@@ -6,6 +6,7 @@ import routes from "./routes/movie.routes.js";
 import theatreRoutes from './routes/theatre.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
+import bookingRoutes from './routes/booking.routes.js';
 
 
 connectDB()
@@ -21,6 +22,7 @@ routes(app);
 theatreRoutes(app);
 authRoutes(app);
 userRoutes(app);
+bookingRoutes(app);
 
 app.listen(process.env.PORT,()=>{
     // this callback gets executed once we successfully start

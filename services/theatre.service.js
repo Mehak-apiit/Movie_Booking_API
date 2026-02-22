@@ -135,7 +135,7 @@ const checkMovieInATheatreService = async(theatreId,movieId) => {
         if(!response){
             return{
                 err: "No such theatre found for the given id",
-                code: 404
+                code: STATUS_CODES.NOT_FOUND
             }
         }
         return response.movies.indexOf(movieId) != -1;
