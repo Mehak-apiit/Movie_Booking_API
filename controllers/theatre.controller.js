@@ -76,11 +76,11 @@ const updateMovies = async (req, res) => {
         }
         successResponseBody.data = response;
         successResponseBody.message = "successfully updated movies in the theatre";
-        return res.status(200).json(successResponseBody);
+        return res.status(STATUS_CODES.OK).json(successResponseBody);
     } catch (error) {
         console.log(error);
         errorResponseBody.err = error;
-        return res.status(500).json(errorResponseBody);
+        return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
 };
 //--------------------------------------------------------------------------------------------------

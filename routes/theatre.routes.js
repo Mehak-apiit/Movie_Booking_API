@@ -5,9 +5,10 @@ const theatreRoutes = (app) => {
     app.post('/mba/api/vi/theatres',isAuthenticated,isAdminorClient,validateTheatreCreateRequest, create);
     app.get('/mba/api/vi/theatres/:id', getTheatre);
     app.get('/mba/api/vi/theatres', getTheatres);
+    app.patch('/mba/api/vi/theatres/:id',isAuthenticated,isAdminorClient,updateMovies)
     app.delete('/mba/api/vi/theatres/:id',isAuthenticated,isAdminorClient,destroy);
     app.patch('/mba/api/vi/theatres/:id/movies',validateUpdateMoviesRequest,updateMovies);
-    app.put('/mba/api/vi/theatres/:id',updateMovies);
+    app.put('/mba/api/vi/theatres/:id',isAuthenticated,isAdminorClient,updateMovies);
     app.get('/mba/api/vi/theatres/:id/movies',getMovies);
     app.get('/mba/api/vi/theatres/:theatreId/movies/:movieId',checkMovie);
 }

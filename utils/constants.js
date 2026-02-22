@@ -22,5 +22,5 @@ const STATUS_CODES = {
 export {
     USER_ROLE,
     USER_STATUS,
-   STATUS_CODES 
+    STATUS_CODES
 };

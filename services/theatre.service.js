@@ -27,10 +27,6 @@ const getTheatreService = async (id) => {
         successResponseBody.message = "Successflully fetched the data of the theatre";
         return res.status(STATUS_CODES.OK).json(successResponseBody);
     } catch (error) {
-        if(error.err){
-            errorResponseBody.err = error.err;
-            return res.status(error.code).json(errorResponseBody)
-        }
         errorResponseBody.err = error;
         return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
     }
@@ -108,7 +104,7 @@ const updateMoviesInTheatres = async (theatreId, movieIds, insert) => {
     } catch (error) {
         if (error.name == 'TypeError') {
             return {
-                code: 404,
+                code: STATUS_CODES.NOT_FOUND,
                 err: 'No theatre found for the given id'
             }
         }
