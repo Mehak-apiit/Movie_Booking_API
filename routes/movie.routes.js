@@ -5,7 +5,7 @@ import validateMovieCreateRequest from "../middlewares/movie.middlewares.js";
 
 const routes =(app) =>{
     app.post('/mba/api/vi/movies',isAuthenticated,isAdminorClient,validateMovieCreateRequest,createMovie);
-    app.delete('/mba/api/vi/movies/:Id',deleteMovie);
+    app.delete('/mba/api/vi/movies/:Id',isAuthenticated,isAdminorClient,deleteMovie);
     app.get('/mba/api/vi/movies/:id',getMovie);
     app.put('/mba/api/vi/movies/:id',updateMovie);
     app.patch('/mba/api/vi/movies/:id',updateMovie);

@@ -21,20 +21,12 @@ const createMovieService = async (data) => {
 const deleteMovieService = async (id) => {
     try{
         const checkMovie =  await Movie.findOne({id});
-        console.log(checkMovie);
         if(!checkMovie){
               throw {
                 err: "No movie record found for the id provided",
-                code: 404
+                code: STATUS_CODES.NOT_FOUND
             }
          }
-        const resonse = await Movie.findByIdAndDelete(id);
-        if(!response){
-            return {
-                err: "No movie record found for the id provided",
-                code: 404
-            }
-        }
         return response
     }catch(error){
         console.log(error);
