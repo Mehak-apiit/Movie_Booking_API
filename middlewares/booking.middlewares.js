@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const ojectId = new mongoose.Types.ojectId();
+const ojectId = mongoose.Types.OjectId;
 import { STATUS_CODES,USER_ROLE,BOOKING_STATUS } from "../utils/constants.js";
 import { errorResponseBody } from "../utils/responsebody.js";
 import { getUserById } from "../services/user.service.js";

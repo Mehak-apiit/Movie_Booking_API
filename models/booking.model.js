@@ -1,41 +1,41 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 import { BOOKING_STATUS } from "../utils/constants.js";
 const bookingSchema = new mongoose.Schema({
-    theatreId:{
+    theatreId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Theatre'
     },
-    movieId:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
+    movieId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
         ref: 'Movie'
     },
-    userId:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:'User'
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
     },
-    timings:{
-        type:String,
-        required:true
+    timings: {
+        type: String,
+        required: true
     },
-    noOfSeats:{
-        type:Number,
-        required:true
+    noOfSeats: {
+        type: Number,
+        required: true
     },
-    totalCost:{
-        type:Number
+    totalCost: {
+        type: Number
     },
-    status:{
-        type:String,
-        required:true,
-        enum:{
-            values:[BOOKING_STATUS.processing,BOOKING_STATUS.cancelled,BOOKING_STATUS.successfull],
-            message:'Invalid booking status'
+    status: {
+        type: String,
+        required: true,
+        enum: {
+            values: [BOOKING_STATUS.processing, BOOKING_STATUS.cancelled, BOOKING_STATUS.successfull],
+            message: 'Invalid booking status'
         },
         default: BOOKING_STATUS.processing
     }
-},{timestamps:true});
-const Booking = new mongoose.model('Booking','bookingSchema');
+}, { timestamps: true });
+const Booking = new mongoose.model('Booking', bookingSchema);
 export default Booking;

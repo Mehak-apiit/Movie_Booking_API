@@ -1,13 +1,13 @@
-import create, { update } from '../controllers/booking.controller.js';
+import { create, update } from '../controllers/booking.controller.js';
 import { validateSignupRequest, validateSigninRequest, isAuthenticated, validateResetPasswordRequest, isAdmin, isClient, isAdminorClient } from '../middlewares/auth.middlewares.js';
-import validateBookingCreateRequest, { canChangeStatus } from '../middlewares/booking.middlewares.js';
+import {validateBookingCreateRequest,canChangeStatus } from '../middlewares/booking.middlewares.js';
 import { getBookings } from '../services/booking.service.js';
 
-const bookingRoutes = (app) =>{
+const bookingRoutes = (app) => {
     app.post(
         '/mba/api/vi/booking',
-        isAuthenticated,
-        validateBookingCreateRequest,
+        //isAuthenticated,
+        //validateBookingCreateRequest,
         create
     );
     app.patch(
