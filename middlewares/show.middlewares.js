@@ -33,4 +33,11 @@ const validateCreateShowRequest = async(req,res,next) =>{
     }
     next();
 }
-export default validateCreateShowRequest;
+const validateShowUpdateRequest = async(req,res,next) =>{
+    if(req.body.theatreId || req.body.movieId){
+        errorResponseBody.err = "We can not update theatre or movie";
+        return res.status(STATUS_CODES.BAD_REQUEST).json(errorResponseBody);
+    }
+    next()
+}
+export {validateCreateShowRequest,validateShowUpdateRequest};

@@ -52,5 +52,37 @@ const getShows = async(data) =>{
     }catch(error){
         throw error;
     }
+};
+const deleteShow =async(id) =>{
+    try{
+        const response = await 
+    }
+};
+const updateShowService = async(id,data) =>{
+    try{
+        const response = await findByIdAndUpdate(id,data,{
+            new: true,
+            ruValidators: true
+        });
+        if(!response){
+            throw{
+                err: 'No show found for the given id',
+                code: STATUS_CODES.NOT_FOUND
+            }
+        }
+        return response;
+    }catch(error){
+        if(error.name == 'ValidationError'){
+            let err = {},
+            Oject.keys(error.errors).forEach(key => {
+                err[key] = error.errors[key].message;
+            });
+            throw{
+                err,
+                code:STATUS_CODES.UNPROCESSABLE_ENTITY
+            }
+        }
+        throw error;
+    }
 }
-export {createShow,getShows};
+export {createShow,getShows,updateShowService};
