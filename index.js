@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
 import bookingRoutes from './routes/booking.routes.js';
 import showRoute from './routes/show.routes.js';
+import paymentRoute from './routes/payment.route.js';
 
 
 connectDB()
@@ -25,6 +26,7 @@ authRoutes(app);
 userRoutes(app);
 bookingRoutes(app);
 showRoute(app);
+paymentRoute(app);
 
 app.listen(process.env.PORT,()=>{
     // this callback gets executed once we successfully start
