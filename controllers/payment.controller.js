@@ -5,9 +5,9 @@ import {
 } from '../services/payment.service.js';
 import { BOOKING_STATUS, STATUS_CODES } from '../utils/constants.js';
 import { errorResponseBody, successResponseBody } from '../utils/responsebody.js';
-import User from '../models/user.model.js';
-import Movie from '../models/movie.model.js';
-import Theatre from '../models/theatre.model.js';
+//import User from '../models/user.model.js';
+//import Movie from '../models/movie.model.js';
+//import Theatre from '../models/theatre.model.js';
 //const sendMail = require('../services/email.service');
 
 const create = async (req, res) => {
