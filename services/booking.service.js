@@ -1,9 +1,10 @@
-import { create } from "../controllers/booking.controller.js";
+import Theatre from "../models/theatre.model.js";
+import Movie from "../models/movie.model.js";
 import Booking from "../models/booking.model.js";
 import { STATUS_CODES } from "../utils/constants.js";
-const createBooking = async (data) => {
+const createBookingService = async (data) => {
     try {
-        const response = await create(data);
+        const response = await Booking.create(data);
         return response;
     } catch (error) {
         console.log(error);
@@ -19,7 +20,7 @@ const createBooking = async (data) => {
 };
 const updateBooking = async (data, bookingId) => {
     try {
-        const response = await findByIdAndUpdate(bookingId, data, {
+        const response = await Booking.findByIdAndUpdate(bookingId, data, {
             new: true, runValidators: true
         });
         if (!response) {
@@ -41,7 +42,7 @@ const updateBooking = async (data, bookingId) => {
         throw error;
     }
 };
-const getBookings = async (data) => {
+const getBookingsService = async (data) => {
     try {
         const response = await Booking.find(data);
         return response;
@@ -49,7 +50,7 @@ const getBookings = async (data) => {
         throw error;
     }
 };
-const getAllBookings = async () => {
+const getAllBookingsService = async () => {
     try {
         const response = await Booking.find();
         return response;
@@ -81,4 +82,4 @@ const getBookingByIdService = async (id, userId) => {
         throw error;
     }
 }
-export { createBooking, updateBooking, getBookings, getAllBookings, getBookingByIdService };
+export { createBookingService, updateBooking, getBookingsService, getAllBookingsService, getBookingByIdService };

@@ -9,7 +9,7 @@ const paymentRoute = (app) => {
     app.post(
         '/mba/api/v1/payments',
         isAuthenticated,
-        verifyPaymentCreateRequest,
+        //verifyPaymentCreateRequest,
         create
     );
 

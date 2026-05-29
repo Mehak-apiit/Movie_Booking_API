@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const ojectId = mongoose.Types.OjectId;
+const OjectId = mongoose.Types.ObjectId;
 import { STATUS_CODES } from "../utils/constants.js";
 import { errorResponseBody } from "../utils/responsebody.js";
 const validateCreateShowRequest = async(req,res,next) =>{

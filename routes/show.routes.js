@@ -1,7 +1,7 @@
-import { destroy, update, create } from '../controllers/show.controller.js';
+import { destroy, update, create ,getShows} from '../controllers/show.controller.js';
 import { validateSignupRequest, validateSigninRequest, isAuthenticated, validateResetPasswordRequest, isAdmin, isClient, isAdminorClient } from '../middlewares/auth.middlewares.js';
 import {validateCreateShowRequest} from '../middlewares/show.middlewares.js';
-import { getShows } from '../services/show.service.js';
+
 
 const showRoute = (app) => {
     app.post(
@@ -16,7 +16,7 @@ const showRoute = (app) => {
         getShows
     );
     app.delete(
-        '/mba/api/vi/show',
+        '/mba/api/vi/show/:id',
         isAuthenticated,
         isAdminorClient,
         destroy
@@ -25,7 +25,6 @@ const showRoute = (app) => {
         '/mba/api/vi/shows/:id',
         isAuthenticated,
         isAdminorClient,
-        validateCreateShowRequest,
         update
     );
 }

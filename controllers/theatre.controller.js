@@ -64,6 +64,7 @@ const destroy = async (req, res) => {
 //------------------------------------------------------------------------------------------------------
 const updateMovies = async (req, res) => {
     try {
+        console.log(req.body);
         const response = await updateMoviesInTheatres(
             req.params.id,
             req.body.movieIds,
@@ -74,6 +75,7 @@ const updateMovies = async (req, res) => {
             return res.status(response.code).json(errorResponseBody);
 
         }
+        
         successResponseBody.data = response;
         successResponseBody.message = "successfully updated movies in the theatre";
         return res.status(STATUS_CODES.OK).json(successResponseBody);

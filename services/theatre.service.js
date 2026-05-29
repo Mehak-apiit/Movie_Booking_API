@@ -23,12 +23,9 @@ const createTheatreService = async (data) => {
 const getTheatreService = async (id) => {
     try {
         const response = await Theatre.findById(id);
-        successResponseBody.data = response;
-        successResponseBody.message = "Successflully fetched the data of the theatre";
-        return res.status(STATUS_CODES.OK).json(successResponseBody);
+        return response;
     } catch (error) {
-        errorResponseBody.err = error;
-        return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
+        throw error;
     }
 }
 //---------------------------------------------------------------------------------------------------

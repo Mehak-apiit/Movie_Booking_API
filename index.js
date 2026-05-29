@@ -10,6 +10,7 @@ import bookingRoutes from './routes/booking.routes.js';
 import showRoute from './routes/show.routes.js';
 import paymentRoute from './routes/payment.route.js';
 import routeTicket from './routes/ticket.routes.js';
+import mailerCron from './cron/cron.js'
 
 
 connectDB()
@@ -31,7 +32,9 @@ paymentRoute(app);
 routeTicket(app);
 
 
+
 app.listen(process.env.PORT,()=>{
     // this callback gets executed once we successfully start
     console.log(`Server is running on port ${process.env.PORT}`)
+    mailerCron();
 })

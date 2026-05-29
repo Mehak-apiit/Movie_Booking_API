@@ -1,8 +1,8 @@
-import ticketNotificationModel from '../models/ticketNotification.js';
+import Notification from '../models/ticketNotification.js';
 import { STATUS_CODES } from '../utils/constants.js';
 const create = async (data) => {
     try {
-        const ticket = await create(data);
+        const ticket = await Notification.create(data);
         return ticket;
     } catch (error) {
         if(error.name == 'ValidationError') {
@@ -19,18 +19,18 @@ const create = async (data) => {
     }
 }
 
-const getAll = async () => {
+const getAllService = async () => {
     try {
-        const response = await find();
+        const response = await Notification.find();
         return response;
     } catch (error) {
         throw error;
     }
 }
 
-const getById = async (id) => {
+const getByIdService = async (id) => {
     try {
-        const response = await findById(id);
+        const response = await Notification.findById(id);
         if(!response) {
             throw {
                 err: 'No ticket details found',
@@ -45,6 +45,6 @@ const getById = async (id) => {
 
 export {
     create,
-    getAll,
-    getById
+    getAllService,
+    getByIdService
 }

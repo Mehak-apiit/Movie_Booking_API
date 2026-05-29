@@ -1,9 +1,10 @@
-import showSchema from '../models/show.model.js';
+import Show from '../models/show.model.js';
 import Theatre from '../models/theatre.model.js';
 import { STATUS_CODES } from '../utils/constants.js';
 const createShow = async (data) => {
     try {
-        const theatre = await findById(data.theatreId);
+        const theatre = await Theatre.findById(data.theatreId);
+        console.log(theatre);
         if (!theatre) {
             throw {
                 err: 'No theatre found',
@@ -16,7 +17,7 @@ const createShow = async (data) => {
                 code: STATUS_CODES.NOT_FOUND
             }
         }
-        const response = await create(data);
+        const response = await Show.create(data);
         return response;
     } catch (error) {
         if (error.name == 'ValidationError') {
@@ -32,7 +33,7 @@ const createShow = async (data) => {
         throw error;
     }
 };
-const getShows = async (data) => {
+const getShowsService = async (data) => {
     try {
         let filter = {};
         if (data.theatreId) {
@@ -55,7 +56,7 @@ const getShows = async (data) => {
 };
 const deleteShow = async (id) => {
     try {
-        const response = await findByIdAndDelete(id);
+        const response = await Show.findByIdAndDelete(id);
         if (!response) {
             throw {
                 err: 'No show found',
@@ -69,7 +70,7 @@ const deleteShow = async (id) => {
 };
 const updateShowService = async (id, data) => {
     try {
-        const response = await findByIdAndUpdate(id, data, {
+        const response = await Show.findByIdAndUpdate(id, data, {
             new: true,
             ruValidators: true
         });
@@ -94,4 +95,4 @@ const updateShowService = async (id, data) => {
         throw error;
     }
 }
-export { createShow, getShows, updateShowService };
+export { createShow, getShowsService, updateShowService,deleteShow };

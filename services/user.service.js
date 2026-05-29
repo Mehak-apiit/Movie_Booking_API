@@ -1,6 +1,6 @@
 import User from '../models/user.model.js';
 import bcrypt from "bcryptjs";
-import { USER_ROLE, USER_STATUS,STATUS_CODES } from '../utils/constants.js';
+import { USER_ROLE, USER_STATUS, STATUS_CODES } from '../utils/constants.js';
 import { errorResponseBody } from '../utils/responsebody.js';
 const createUser = async (data) => {
     try {
@@ -11,7 +11,7 @@ const createUser = async (data) => {
                     code: 400
                 }
             }
-            if(data.userRole && data.userRole != USER_ROLE.customer){
+            if (data.userRole && data.userRole != USER_ROLE.customer) {
                 data.userStatus = USER_STATUS.pending;
             }
         }
@@ -32,59 +32,60 @@ const createUser = async (data) => {
         throw error;
     }
 }
-const getUserByEmail = async(email) => {
-    try{
-        const response = await User.findOne({email});
-        if(!response){
-            throw {err: "No user found for the given email", code:404};
+const getUserByEmail = async (email) => {
+    try {
+        const response = await User.findOne({ email });
+        if (!response) {
+            throw { err: "No user found for the given email", code: 404 };
         }
         return response;
-    }catch (error){
+    } catch (error) {
         console.log(error);
         throw error;
     }
 
 };
-const getUserById = async(id) => {
-    try{
+const getUserById = async (id) => {
+    try {
         const user = await User.findById(id);
-        if(!user){
-            throw {err: "No user found for the given id",code:404};
+        if (!user) {
+            throw { err: "No user found for the given id", code: 404 };
         }
         return user;
-    }catch(error){
+    } catch (error) {
         console.log(error);
         throw error;
     }
 };
-const resetPasswordService = async(req,res) => {
-    try{
+const resetPasswordService = async (req, res) => {
+    try {
         const user = await getUserById(req.body.id);
-    }catch(error){
+    } catch (error) {
         errorResponseBody.err = error;
         return res.status(500).json(errorResponseBody);
     }
 };
-const updateUserRoleorStatus = async(data,userId) =>{
-    try{
+const updateUserRoleorStatus = async (data, userId) => {
+    try {
         let updateQuery = {};
-        if(data.userRole) updateQuery.userRole = data.userRole;
-        if(data.userStatus) updateQuery.userStatus = data.userStatus;
-        let response = await User.findByIdAndUpdate(userId,updateQuery,{
-            new: true,runValidators:true});
-        if(!response) throw {err: 'No user found for the given id',code: STATUS_CODES.NOT_FOUND};
+        if (data.userRole) updateQuery.userRole = data.userRole;
+        if (data.userStatus) updateQuery.userStatus = data.userStatus;
+        let response = await User.findByIdAndUpdate(userId, updateQuery, {
+            new: true, runValidators: true
+        });
+        if (!response) throw { err: 'No user found for the given id', code: STATUS_CODES.NOT_FOUND };
         return response;
-    }catch (error){
-        console.log(error,error.name);
-        if(error.name == 'ValidationError'){
+    } catch (error) {
+        console.log(error, error.name);
+        if (error.name == 'ValidationError') {
             let err = {};
             Object.keys(error.errors).forEach(key => {
                 err[key] = error.errors[key].message;
             });
-            throw {err: err, code:STATUS_CODES.BAD_REQUEST};
+            throw { err: err, code: STATUS_CODES.BAD_REQUEST };
         }
         throw error;
-}
+    }
 }
 
-export {createUser,getUserByEmail,getUserById,resetPasswordService,updateUserRoleorStatus}
+export { createUser, getUserByEmail, getUserById, resetPasswordService, updateUserRoleorStatus }

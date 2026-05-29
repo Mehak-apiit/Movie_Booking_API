@@ -24,5 +24,5 @@ const ticketNotificationSchema = new mongoose.Schema({
     }
 }, {timestamps: true});
 
-const ticketNotificationModel = mongoose.model('TicketNotification', ticketNotificationSchema);
-export default ticketNotificationModel;
+const Notification = mongoose.model('TicketNotification', ticketNotificationSchema);
+export default Notification;

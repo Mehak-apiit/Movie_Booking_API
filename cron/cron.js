@@ -1,10 +1,10 @@
 import cron from 'node-cron';
 import Ticket from '../models/ticketNotification.js';
-const Mailer = require('../services/email.service');
+import Mailer from '../config/mail.config.js'
 
 const mailerCron = () => {
-    const mailer = Mailer(process.env.EMAIL, process.env.EMAIL_PASS);
-    cron.schedule('*/2 * * * *', async () => {
+    const mailer = Mailer(process.env.EMAIL_USER, process.env.EMAIL_PASSWORD);
+    cron.schedule('*/1 * * * *', async () => {
         console.log("Executing Cron Again");
         const notificationsToBeSent = await Ticket.find({
             status: 'PENDING'
@@ -12,7 +12,7 @@ const mailerCron = () => {
     
         notificationsToBeSent.forEach(notification => {
             const mailData = {
-                from: 'mba@support.com',
+                from: process.env.EMAIL_USER,
                 to: notification.recepientEmails,
                 subject: notification.subject,
                 text: notification.content
@@ -22,7 +22,7 @@ const mailerCron = () => {
                     console.log(err);
                 } else {
                     console.log(data);
-                    const savedNotification = await findOne({_id: notification._id});
+                    const savedNotification = await Ticket.findOne({_id: notification._id});
                     savedNotification.status = "SUCCESS";
                     await savedNotification.save();
                 }

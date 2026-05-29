@@ -1,7 +1,7 @@
 import {
     create,
-    getAll,
-    getById
+    getAllService,
+    getByIdService
 }  from '../services/notification.service.js';
 import  { successResponseBody, errorResponseBody} from '../utils/responsebody.js';
 import { STATUS_CODES } from '../utils/constants.js';
@@ -24,7 +24,7 @@ const createTicket = async (req, res) => {
 
 const getAllTickets = async (req, res) => {
     try {
-        const response = await getAll();
+        const response = await getAllService();
         successResponseBody.data = response;
         successResponseBody.message = 'Successfully fetched all the tickets';
         return res.status(STATUS_CODES.OK).json(successResponseBody);
@@ -36,7 +36,7 @@ const getAllTickets = async (req, res) => {
 
 const getTicket = async (req, res) => {
     try {
-        const response = await getById(req.params.id);
+        const response = await getByIdService(req.params.id);
         successResponseBody.data = response;
         successResponseBody.message = 'Successfully fetched details of the given ticket id';
         return res.status(STATUS.OK).json(successResponseBody);

@@ -1,4 +1,4 @@
-import { updateShowService, createShow } from '../services/show.service.js';
+import { updateShowService, createShow,getShowsService,deleteShow} from '../services/show.service.js';
 import { successResponseBody, errorResponseBody } from '../utils/responsebody.js';
 import { STATUS_CODES } from '../utils/constants.js';
 const create = async (req, res) => {
@@ -8,6 +8,7 @@ const create = async (req, res) => {
         successResponseBody.data = response;
         return res.status(STATUS_CODES.CREATED).json(successResponseBody);
     } catch (error) {
+        console.log(error);
         if (error.err) {
             errorResponseBody.err = error.err;
             return res.status(error.code).json(errorResponseBody);
@@ -18,7 +19,7 @@ const create = async (req, res) => {
 };
 const getShows = async (req, res) => {
     try {
-        const response = await getShows(req.query);
+        const response = await getShowsService(req.query);
         successResponseBody.message = "Successfully fetched the movie shows";
         successResponseBody.data = response;
         return res.status(STATUS_CODES.OK).json(successResponseBody);
@@ -34,11 +35,14 @@ const getShows = async (req, res) => {
 };
 const destroy = async (req, res) => {
     try {
+        
         const response = await deleteShow(req.params.id);
+        console.log(response);
         successResponseBody.data = response;
         successResponseBody.message = "Successfully deleted the show";
         return res.status(STATUS_CODES.OK).json(successResponseBody);
     } catch (error) {
+        console.log(error);
         if (error.err) {
             errorResponseBody.err = error.err;
             return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(errorResponseBody);
