@@ -33,7 +33,7 @@ const validateBookingCreateRequest = async (req, res, next) => {
         return res.status(STATUS_CODES.BAD_REQUEST).json(errorResponseBody);
     }
     //validate if movie is running in the theatre or not
-    if (!theatre.movies.indexOf(req.body.movieId) == -1) {
+    if (theatre.movies.indexOf(req.body.movieId) === -1) {
         errorResponseBody.err = "Given movie is not available in the requested theatre";
         return res.status(STATUS_CODES.NOT_FOUND).json(errorResponseBody);
     }

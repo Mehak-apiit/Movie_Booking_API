@@ -72,7 +72,7 @@ const updateShowService = async (id, data) => {
     try {
         const response = await Show.findByIdAndUpdate(id, data, {
             new: true,
-            ruValidators: true
+            runValidators: true
         });
         if (!response) {
             throw {
@@ -84,7 +84,7 @@ const updateShowService = async (id, data) => {
     } catch (error) {
         if (error.name == 'ValidationError') {
             let err = {};
-            Oject.keys(error.errors).forEach(key => {
+            Object.keys(error.errors).forEach(key => {
                 err[key] = error.errors[key].message;
             });
             throw {

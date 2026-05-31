@@ -20,10 +20,9 @@ const validateMovieCreateRequest = async (req, res, next) => {
         return res.status(STATUS_CODES.BAD_REQUEST).json(badRequestResponse);
     }
     // validate the movie casts
-    if (!req.body.casts || !(req.body.casts instanceof Array) || req.body.lenth <= 0) {
+    if (!req.body.casts || !(req.body.casts instanceof Array) || req.body.casts.length <= 0) {
         badRequestResponse.err = "The casts of the movie is not present in the request";
         return res.status(STATUS_CODES.BAD_REQUEST).json(badRequestResponse);
-
     }
     //validate the movie trailer url 
     if (!req.body.trailerUrl) {

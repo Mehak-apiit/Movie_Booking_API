@@ -9,12 +9,14 @@ const verifyTicketNotificationCreateRequest = async (req, res, next) =>{
         errorResponseBody.err = 'No content given for the email'
         return res.status(STATUS_CODES.BAD_REQUEST).json(errorResponseBody);
     }
-    if(!req.body.recepientEmails || !(req.body.recepientEmails instanceof Array) || 
-        req.body.recepientEmails.length <= 0
-    ) {
-        errorResponseBody.err - 'No recepitent emails given';
+    const emails = req.body.recepientEmails ?? req.body.recipientEmails;
+    if(!emails || !(emails instanceof Array) || emails.length <= 0) {
+        errorResponseBody.err = 'No recepitent emails given';
         return res.status(STATUS_CODES.BAD_REQUEST).json(errorResponseBody);
     }
+
+    // normalize field name for downstream notification service/mailer code
+    req.body.recepientEmails = emails;
     next();
 }
 
